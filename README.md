@@ -1,27 +1,30 @@
-# FinanceManager
+# FinanceManager 📊💰
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.11.
+## Sobre o Projeto
 
-## Development server
+O FinanceManager é uma aplicação web desenvolvida com Angular, focada em fornecer uma ferramenta de gestão financeira para os usuários rastrear seus gastos, rendimentos e saúde financeira geral 💸📈
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Tecnologias Utilizadas
 
-## Code scaffolding
+- **Angular**: Framework front-end para construir a aplicação web 🖥️
+- **RxJS**: Biblioteca de programação reativa para manipulação de operações assíncronas ⏳
+- **Tailwind CSS**: Framework CSS utilitário para estilização 👗
+- **Jasmine & Karma**: Ferramentas de teste para unidade e integração 🔍
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Recursos Principais
 
-## Build
+1. **Geração de Relatórios**: Crie relatórios detalhados sobre suas finanças 📊
+2. **Categorização de Despesas**: Organize suas despesas por categorias 🗂️
+3. **Alertas de Limite**: Receba alertas quando ultrapassar seus limites financeiros ⚠️
+4. **Integração Bancária**: Conecte sua conta bancária para sincronização automática de transações 💳
+5. **Análise de Orçamento**: Visualize gráficos e análises de seu orçamento mensal 📈
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Como Usar
 
-## Running unit tests
+1. Clone o repositório: `git clone https://github.com/seuusuario/FinanceManager.git` 🌐
+2. Instale as dependências: `npm install` 🛠️
+3. Inicie o servidor de desenvolvimento: `ng serve` 🔍
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Licença
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Este projeto está licenciado sob a MIT License - ver o arquivo [LICENSE](LICENSE) para mais detalhes. 📜
