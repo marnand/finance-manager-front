@@ -1,61 +1,56 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Result } from '@app/core/model/Result';
+import { State } from '@app/core/model/State';
+import { SnackbarService } from '@app/core/services/snackbar.service';
+import { Common } from '@app/core/utils/common';
+import { ButtonComponent } from '@app/shared/components/button/button.component';
 import { HeaderComponent } from '@components/header/header.component';
 import { LoginService } from './service/login.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HeaderComponent],
+  imports: [CommonModule, ReactiveFormsModule, HeaderComponent, ButtonComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
-  serv = inject(LoginService);
+export class LoginComponent implements OnInit, OnDestroy {
+  #fb = inject(FormBuilder);
+  #service = inject(LoginService);
+  #common = inject(Common);
+  #snackbar = inject(SnackbarService);
 
-  form: FormGroup;
-  isRegisterMode = false; // Alterna entre login e registro
+  state = new State<string>();
+  form = this.#fb.group(
+    {
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    }
+  );
 
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group(
-      {
-        name: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: [''],
-      },
-      { validators: this.passwordsMatchValidator }
-    );
+  ngOnInit(): void { }
 
-    this.serv.getUsers().subscribe(r => console.log(r));
-  }
+  ngOnDestroy = (): void => this.state.destroy();
 
-  // Validação personalizada para confirmar senhas
-  passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
-    const password = group.get('password')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-
-    return password === confirmPassword || !this.isRegisterMode
-      ? null
-      : { passwordMismatch: true };
-  }
-
-  toggleMode() {
-    this.isRegisterMode = !this.isRegisterMode;
-
+  goToRegister() {
     this.form.reset();
+    this.#common.goToPage('/registrar');
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      if (this.isRegisterMode) {
-        console.log('Registrar:', this.form.value);
-      } else {
-        console.log('Login:', this.form.value);
-      }
-    } else {
-      console.log('Formulário inválido');
+    if (!this.form.valid) {
+      this.#snackbar.show({ message: 'Campos inválidos.', type: 'error' });
+      return;
     }
+
+    this.state.connect(this.#service.login(this.form.value), res => this.handleSuccess(res));
+  }
+
+  private handleSuccess(result?: Result<string>): void {
+    if (result !== undefined && result.data !== null)
+      this.#service.setToken(result.data);
+    this.#common.goToPage('/home');
   }
 }

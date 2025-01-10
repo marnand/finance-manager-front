@@ -1,36 +1,15 @@
 <div class="flex flex-col h-screen bg-gray-100 dark:bg-gray-800">
   <app-header />
-  
+
   <div class="m-auto w-full max-w-md bg-white p-8 shadow-lg rounded-lg">
-    <h2 class="text-2xl font-bold text-center text-gray-800" *ngIf="!isRegisterMode">Login</h2>
-    <h2 class="text-2xl font-bold text-center text-gray-800" *ngIf="isRegisterMode">Registrar</h2>
+    <h2 class="text-2xl font-bold text-center text-gray-800">Login</h2>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-6">
-      <!-- Name Field -->
-      @if (isRegisterMode) {
-        <div class="mb-4">
-          <label for="name" class="block text-gray-700 font-semibold">Nome</label>
-          <input
-            type="text"
-            id="name"
-            formControlName="name"
-            class="w-full p-2 border rounded-lg text-slate-600 focus:outline-none focus:ring focus:ring-blue-300"
-          />
-          <p *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="text-red-500 text-sm">
-            Nome inválido.
-          </p>
-        </div>
-      }
-      
       <!-- Email Field -->
       <div class="mb-4">
         <label for="email" class="block text-gray-700 font-semibold">Email</label>
-        <input
-          type="email"
-          id="email"
-          formControlName="email"
-          class="w-full p-2 border rounded-lg text-slate-600 focus:outline-none focus:ring focus:ring-blue-300"
-        />
+        <input type="email" id="email" formControlName="email"
+          class="w-full p-2 border rounded-lg text-slate-600 focus:outline-none focus:ring focus:ring-blue-300" />
         <p *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="text-red-500 text-sm">
           Email inválido.
         </p>
@@ -39,47 +18,21 @@
       <!-- Password Field -->
       <div class="mb-4">
         <label for="password" class="block text-gray-700 font-semibold">Senha</label>
-        <input
-          type="password"
-          id="password"
-          formControlName="password"
-          class="w-full p-2 border rounded-lg text-slate-600 focus:outline-none focus:ring focus:ring-blue-300"
-        />
+        <input type="password" id="password" formControlName="password"
+          class="w-full p-2 border rounded-lg text-slate-600 focus:outline-none focus:ring focus:ring-blue-300" />
         <p *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="text-red-500 text-sm">
           A senha deve ter pelo menos 6 caracteres.
         </p>
       </div>
 
-      <!-- Confirm Password Field (only for registration) -->
-      @if (isRegisterMode) {
-        <div class="mb-4">
-          <label for="confirmPassword" class="block text-gray-700 font-semibold">Confirmar Senha</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            formControlName="confirmPassword"
-            class="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-          />
-          <p *ngIf="form.hasError('passwordMismatch') && form.get('confirmPassword')?.touched" class="text-red-500 text-sm">
-            As senhas não coincidem.
-          </p>
-        </div>
-      }
-
       <!-- Submit Button -->
-      <button
-        type="submit"
-        [disabled]="form.invalid"
-        class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition disabled:bg-gray-400"
-      >
-        {{ isRegisterMode ? 'Registrar' : 'Login' }}
-      </button>
+      <btn-button [loading]="state.loading()" [text]="'Login'" [fullWidth]="true" [disable]="form.invalid" />
     </form>
 
     <p class="mt-4 text-center text-gray-600">
-      {{ isRegisterMode ? 'Já possui uma conta?' : 'Não possui uma conta?' }}
-      <a (click)="toggleMode()" class="cursor-pointer text-blue-500 hover:underline">
-        {{ isRegisterMode ? 'Faça login' : 'Registre-se' }}
+      Não possui uma conta?
+      <a (click)="goToRegister()" class="cursor-pointer text-blue-500 hover:underline">
+        Registre-se
       </a>
     </p>
   </div>
