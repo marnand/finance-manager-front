@@ -1,1 +1,64 @@
-<h1>cadastro</h1>
+<div class="flex flex-col h-screen bg-gray-100 dark:bg-gray-800">
+  <div class="m-auto w-full max-w-md bg-white p-8 shadow-lg rounded-lg">
+    <h2 class="text-2xl font-bold text-center text-gray-800">Registrar</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-6">
+      <div class="mb-4">
+        <label for="name" class="block text-gray-700 font-semibold">Nome</label>
+        <input type="text" id="name" formControlName="name"
+          class="w-full p-2 border rounded-lg text-slate-600 focus:outline-none focus:ring focus:ring-blue-300" />
+        @if (form.get('name')?.invalid && form.get('name')?.touched) {
+        <p class="text-red-500 text-sm">
+          Nome inválido.
+        </p>
+        }
+      </div>
+
+      <!-- Email Field -->
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700 font-semibold">Email</label>
+        <input type="email" id="email" formControlName="email"
+          class="w-full p-2 border rounded-lg text-slate-600 focus:outline-none focus:ring focus:ring-blue-300" />
+        @if (form.get('email')?.invalid && form.get('email')?.touched) {
+        <p class="text-red-500 text-sm">
+          Email inválido.
+        </p>
+        }
+      </div>
+
+      <!-- Password Field -->
+      <div class="mb-4">
+        <label for="password" class="block text-gray-700 font-semibold">Senha</label>
+        <input type="password" id="password" formControlName="password"
+          class="w-full p-2 border rounded-lg text-slate-600 focus:outline-none focus:ring focus:ring-blue-300" />
+        @if (form.get('password')?.invalid && form.get('password')?.touched) {
+        <p class="text-red-500 text-sm">
+          A senha deve ter pelo menos 6 caracteres.
+        </p>
+        }
+      </div>
+
+      <!-- Confirm Password Field (only for registration) -->
+      <div class="mb-4">
+        <label for="confirmPassword" class="block text-gray-700 font-semibold">Confirmar Senha</label>
+        <input type="password" id="confirmPassword" formControlName="confirmPassword"
+          class="w-full p-2 border rounded-lg text-slate-600 focus:outline-none focus:ring focus:ring-blue-300" />
+        @if (form.hasError('passwordMismatch') && form.get('confirmPassword')?.touched) {
+        <p class="text-red-500 text-sm">
+          As senhas não coincidem.
+        </p>
+        }
+      </div>
+
+      <!-- Submit Button -->
+      <btn-button [loading]="state.loading()" [text]="'Registrar'" [fullWidth]="true" [disable]="form.invalid" />
+    </form>
+
+    <p class="mt-4 text-center text-gray-600">
+      Já possui uma conta?
+      <a (click)="goToLogin()" class="cursor-pointer text-blue-500 hover:underline">
+        Faça login
+      </a>
+    </p>
+  </div>
+</div>
