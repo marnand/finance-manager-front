@@ -22,15 +22,7 @@ export class AuthService {
     // }
   }
 
-  getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
-  }
-
-  setToken(token: string): void {
-    localStorage.setItem(this.TOKEN_KEY, token);
-  }
-
-  removeToken(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
-  }
+  getToken = (): string | null => localStorage.getItem(this.TOKEN_KEY);
+  setToken = (token: string): void => localStorage.setItem(this.TOKEN_KEY, token);
+  removeToken = (): void => localStorage.removeItem(this.TOKEN_KEY);
 }

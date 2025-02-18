@@ -1,3 +1,4 @@
+@if (shouldShowHeader()) {
 <div class="flex justify-end items-center m-6">
   <app-toggle (checkedChange)="toggleTheme()" [checked]="isDarkMode">
     @if (isDarkMode) {
@@ -8,3 +9,4 @@
     }
   </app-toggle>
 </div>
+}

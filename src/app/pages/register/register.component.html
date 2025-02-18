@@ -8,9 +8,7 @@
         <input type="text" id="name" formControlName="name"
           class="w-full p-2 border rounded-lg text-slate-600 focus:outline-none focus:ring focus:ring-blue-300" />
         @if (form.get('name')?.invalid && form.get('name')?.touched) {
-        <p class="text-red-500 text-sm">
-          Nome inválido.
-        </p>
+        <p class="text-red-500 text-sm">Nome inválido.</p>
         }
       </div>
 
@@ -20,9 +18,7 @@
         <input type="email" id="email" formControlName="email"
           class="w-full p-2 border rounded-lg text-slate-600 focus:outline-none focus:ring focus:ring-blue-300" />
         @if (form.get('email')?.invalid && form.get('email')?.touched) {
-        <p class="text-red-500 text-sm">
-          Email inválido.
-        </p>
+        <p class="text-red-500 text-sm">Email inválido.</p>
         }
       </div>
 
@@ -43,10 +39,9 @@
         <label for="confirmPassword" class="block text-gray-700 font-semibold">Confirmar Senha</label>
         <input type="password" id="confirmPassword" formControlName="confirmPassword"
           class="w-full p-2 border rounded-lg text-slate-600 focus:outline-none focus:ring focus:ring-blue-300" />
-        @if (form.hasError('passwordMismatch') && form.get('confirmPassword')?.touched) {
-        <p class="text-red-500 text-sm">
-          As senhas não coincidem.
-        </p>
+        @if (form.hasError('passwordMismatch') &&
+        form.get('confirmPassword')?.touched) {
+        <p class="text-red-500 text-sm">As senhas não coincidem.</p>
         }
       </div>
 
