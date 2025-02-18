@@ -40,14 +40,14 @@ export class State<T> {
         });
       },
       error: (error: HttpErrorResponse) => {
-        const resultError = error.error as unknown as Result<T>;
-        
+        const resultError = error.error;
+
         this.state.set({
           data: resultError,
           loading: false
         });
         
-        const message = resultError.error?.message ?? "Erro ao realizar a requisição.";
+        const message = resultError?.message ?? resultError.error?.message ?? "Erro ao realizar a requisição.";
         this.#snackbar.show({ message: message, type: 'error' });
       }
     });

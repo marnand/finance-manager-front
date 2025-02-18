@@ -4,15 +4,11 @@ import { Component, input, output } from '@angular/core';
   selector: 'app-toggle',
   standalone: true,
   imports: [],
-  templateUrl: './toggle.component.html',
-  styleUrl: './toggle.component.scss'
+  templateUrl: './toggle.component.html'
 })
 export class ToggleComponent {
   checked = input<boolean>(false);
   checkedChange = output<void>();
 
-  onToggleChange(): void {
-    this.checkedChange.emit();
-  }
-
+  onToggleChange = (): void => this.checkedChange.emit();
 }

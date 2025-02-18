@@ -1,37 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToggleComponent } from '../toggle/toggle.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [ToggleComponent],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent {
-  isDarkMode = false;
-
-  constructor() {
-    this.loadTheme();
-  }
+  private router = inject(Router);
+  private readonly _theme = localStorage.getItem('theme');
+  isDarkMode = this._theme === null ? false : this._theme === 'dark';
 
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
-    const htmlElement = document.documentElement;
-    if (this.isDarkMode) {
-      htmlElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      htmlElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
+    this.setTheme(this.isDarkMode);
   }
 
-  loadTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    this.isDarkMode = savedTheme === 'dark';
-    if (this.isDarkMode) {
-      document.documentElement.classList.add('dark');
-    }
+  shouldShowHeader(): boolean {
+    return !['/login', '/registrar'].includes(this.router.url);
+  }
+
+  private setTheme(isDark: boolean) {
+    const htmlElement = document.documentElement;
+    isDark ? htmlElement.classList.add('dark') : htmlElement.classList.remove('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
   }
 }
