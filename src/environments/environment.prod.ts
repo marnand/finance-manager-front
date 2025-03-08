@@ -1,4 +1,6 @@
+declare const process: any
+
 export const environment = {
   production: true,
-  apiUrl: process.env['API_URL'],
+  apiUrl: process.env.NG_APP_API_URL,
 };
