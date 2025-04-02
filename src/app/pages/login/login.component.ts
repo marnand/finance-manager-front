@@ -6,15 +6,13 @@ import { State } from '@app/core/model/State';
 import { SnackbarService } from '@app/core/services/snackbar.service';
 import { Common } from '@app/core/utils/common';
 import { ButtonComponent } from '@app/shared/components/button/button.component';
-import { HeaderComponent } from '@components/header/header.component';
 import { LoginService } from './service/login.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HeaderComponent, ButtonComponent],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit, OnDestroy {
   #fb = inject(FormBuilder);

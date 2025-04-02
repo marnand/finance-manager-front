@@ -13,7 +13,7 @@ export class State<T> {
   }>({
     data: null,
     loading: false
-  });
+  })
 
   private readonly destroy$ = new Subject<void>();
 
@@ -25,34 +25,33 @@ export class State<T> {
   }
 
   connect<R = T>(source$: Observable<R>, onSuccess?: (data?: R) => void): this {
-    this.reset();
-    this.state.update(state => ({ ...state, loading: true }));
+    this.reset()
+    this.state.update(state => ({ ...state, loading: true }))
 
     source$.pipe(
       takeUntil(this.destroy$)
     ).subscribe({
       next: (response) => {
-        if (onSuccess) onSuccess(response);
+        if (onSuccess) onSuccess(response)
 
         this.state.set({
           data: response as unknown as Result<T>,
           loading: false
-        });
+        })
       },
       error: (error: HttpErrorResponse) => {
-        const resultError = error.error;
-
+        const resultError = error.error
         this.state.set({
           data: resultError,
           loading: false
-        });
+        })
         
-        const message = resultError?.message ?? resultError.error?.message ?? "Erro ao realizar a requisição.";
-        this.#snackbar.show({ message: message, type: 'error' });
+        const message = resultError?.message ?? resultError.error?.message ?? "Erro ao realizar a requisição."
+        this.#snackbar.show({ message: message, type: 'error' })
       }
-    });
+    })
 
-    return this;
+    return this
   }
 
   reset(): this {
