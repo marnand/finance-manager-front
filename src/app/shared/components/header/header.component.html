@@ -1,12 +1,14 @@
-@if (shouldShowHeader()) {
-<div class="flex justify-end items-center m-6">
+@if (showReader()) {
+<div class="flex justify-end items-center gap-4 m-6">
+  <button 
+    (click)="logout()" 
+    class="flex items-center gap-2 px-4 py-2 text-sm rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+    title="Sair">
+    <span>Sair</span>
+  </button>
+  
   <app-toggle (checkedChange)="toggleTheme()" [checked]="isDarkMode">
-    @if (isDarkMode) {
-    Claro
-    }
-    @else {
-    Escuro
-    }
+    {{ isDarkMode ? 'Claro' : 'Escuro' }}
   </app-toggle>
 </div>
 }

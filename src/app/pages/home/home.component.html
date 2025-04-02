@@ -18,7 +18,9 @@
       <!-- Saldo Total -->
       <div class="bg-white p-6 rounded-lg shadow">
         <h2 class="text-sm font-medium text-gray-500">Saldo Total</h2>
-        <p class="mt-2 text-3xl font-semibold text-gray-900">R$ {{ subTotal() }}</p>
+        <p class="mt-2 text-3xl font-semibold text-gray-900">
+          {{ subTotal() | monetary }}
+        </p>
         <div class="mt-2 flex items-center text-sm text-green-600">
           <span>+12% em relação ao mês anterior</span>
         </div>
@@ -27,7 +29,9 @@
       <!-- Receitas -->
       <div class="bg-white p-6 rounded-lg shadow">
         <h2 class="text-sm font-medium text-gray-500">Receitas do Mês</h2>
-        <p class="mt-2 text-3xl font-semibold text-green-600">R$ {{ incomeMonth().amount }}</p>
+        <p class="mt-2 text-3xl font-semibold text-green-600">
+          {{ incomeMonth().amount | monetary }}
+        </p>
         <div class="mt-2 flex items-center text-sm text-gray-600">
           <span>{{ incomeMonth().count }} transações este mês</span>
         </div>
@@ -36,7 +40,9 @@
       <!-- Despesas -->
       <div class="bg-white p-6 rounded-lg shadow">
         <h2 class="text-sm font-medium text-gray-500">Despesas do Mês</h2>
-        <p class="mt-2 text-3xl font-semibold text-red-600">R$ {{ expenseMonth().amount }}</p>
+        <p class="mt-2 text-3xl font-semibold text-red-600">
+          {{ expenseMonth().amount | monetary }}
+        </p>
         <div class="mt-2 flex items-center text-sm text-gray-600">
           <span>{{ expenseMonth().count }} transações este mês</span>
         </div>
@@ -49,20 +55,32 @@
         <h2 class="text-lg font-medium text-gray-900">Transações Recentes</h2>
       </div>
       <div class="divide-y divide-gray-200 text-gray-900">
-        @if(state.loading()) { carregando... }
+        @if(state.loading())
+        {
+        carregando...
+        }
 
-        @if (!state.loading()) {
-        @for(tran of state.data()?.data ?? []; track tran.id) {
-        <div class="px-6 py-4 flex items-center justify-between text-gray-900">
+        @if (!state.loading())
+        {
+        @for(tran of data(); track tran)
+        {
+        <div class="px-6 py-2 flex items-center justify-between text-gray-900">
           <div>
             <p class="text-sm font-medium text-gray-900">{{ tran.description }}</p>
             <p class="text-sm text-gray-500">{{ tran.date | date : "dd/MM/yyyy" }}</p>
           </div>
           <span class="{{ tran.type === 'income' ? 'text-green-600' : 'text-red-600' }} font-medium">
-            {{ tran.type === "income" ? "" : "-" }} R$ {{ tran.amount }}
+            {{ tran.type === "income" ? "" : "-" }} R$ {{ tran.amount | monetary }}
           </span>
         </div>
-        } @empty { sem resultados } }
+        }
+        @empty
+        {
+        <div class="px-6 py-4 text-center text-gray-500">
+          Nenhuma transação encontrada.
+        </div>
+        }
+        }
       </div>
     </div>
   </main>
